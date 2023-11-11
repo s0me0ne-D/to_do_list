@@ -1,0 +1,73 @@
+.new-task {
+	width: 700px;
+	height: fit-content;
+	margin: 0 auto;
+	display: flex;
+	flex-direction: column;
+	background-color: var(---navBar-background);
+	border: 1px solid #dddddd7c;
+	border-radius: 10px;
+	.new-task-name {
+		display: block;
+		background: transparent;
+		width: 100%;
+		height: 50px;
+		padding: 10px;
+		border-bottom: 1px solid var(---newTaskForm-border-bottom);
+		font-weight: bold;
+		color: var(---edit-fill-color);
+		&.error-value {
+			border: 1px solid red;
+			border-radius: 10px 10px 0 0;
+		}
+	}
+
+	.new-task-description {
+		display: block;
+		background: transparent;
+		width: 100%;
+		height: fit-content;
+		padding: 10px;
+		border-bottom: 1px solid var(---newTaskForm-border-bottom);
+		resize: none;
+		color: var(---edit-fill-color);
+	}
+	.new-task-footer {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		#new-task-priority {
+			width: 80px;
+			height: 30px;
+			background: transparent;
+			border: 1px solid var(---priority-button-color);
+			border-radius: 10px;
+			margin-left: 3px;
+			color: var(---priority-button-color);
+		}
+		.new-task-buttons {
+			.new-task-cancel {
+				color: white;
+				border-radius: 5px;
+				width: 100px;
+				height: 30px;
+				margin: 3px;
+				background-color: #c9c9c9;
+				&:hover {
+					background-color: #b5b4b4;
+				}
+			}
+			.new-task-add {
+				color: white;
+				border-radius: 5px;
+				width: 100px;
+				height: 30px;
+				margin: 3px;
+				background-color: #de797a;
+				&:hover {
+					background-color: #d66567;
+				}
+			}
+		}
+	}
+}

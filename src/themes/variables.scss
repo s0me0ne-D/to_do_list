@@ -1,0 +1,25 @@
+.light {
+	---header-color: #2f6ce3;
+	---navBar-background: #f7f8fb;
+	---navBar-directory-background: #eaeaed;
+	---edit-fill-color: black;
+	---edit-background-color: #d3d3d395;
+	---taskList-header-options-hover: rgba(167, 165, 165, 0.455);
+	---priority-button-color: rgba(0, 0, 0, 0.499);
+	---taskPage-background: #f3f4f8;
+	---newTaskForm-border-bottom: #dddddd7c;
+}
+.dark {
+	---header-color: #2c2c39;
+	---navBar-background: #211f2e;
+	---text-color: #ffffff;
+	---navBar-directory-background: #7992e1;
+	---edit-fill-color: white;
+	---edit-background-color: #dcdcdc4d;
+	---taskList-header-options-hover: #c0bfbf4d;
+	---priority-button-color: rgba(255, 255, 255, 0.495);
+	---taskPage-background: #444558;
+	---newTaskForm-border-bottom: #dddddd51;
+
+	color: white;
+}

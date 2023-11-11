@@ -1,0 +1,206 @@
+.tasks-page {
+	width: 100%;
+	position: relative;
+	background-color: var(---taskPage-background);
+}
+.tasks {
+	width: 700px;
+	height: fit-content;
+	margin: 30px auto;
+	display: flex;
+	flex-direction: column;
+	gap: 30px;
+	position: relative;
+	.priority-1 {
+		&::after {
+			content: "";
+			position: absolute;
+			right: -15px;
+			width: 10px;
+			height: 10px;
+			background-color: red;
+		}
+	}
+	.priority-2 {
+		&::after {
+			content: "";
+			position: absolute;
+			right: -15px;
+			width: 10px;
+			height: 10px;
+			background-color: blue;
+		}
+	}
+	.priority-3 {
+		&::after {
+			content: "";
+			position: absolute;
+			right: -15px;
+			width: 10px;
+			height: 10px;
+			background-color: green;
+		}
+	}
+	.checked {
+		opacity: 0.5;
+		filter: grayscale(1);
+	}
+	.task-header {
+		width: 100%;
+		display: flex;
+		justify-content: space-between;
+		.task-header-buttons {
+			display: flex;
+			gap: 5px;
+			.task-completed-button {
+				background-color: var(---edit-background-color);
+				border-radius: 7px;
+				padding: 3px;
+				display: flex;
+				align-items: center;
+				gap: 5px;
+				color: var(---edit-fill-color);
+				&:hover {
+					background-color: var(---taskList-header-options-hover);
+				}
+				.show-img {
+					width: 17px;
+					height: 17px;
+					position: relative;
+					border: 1px solid var(---edit-fill-color);
+					border-radius: 5px;
+					.show-img-line1 {
+						width: 70%;
+						height: 1px;
+						background-color: var(---edit-fill-color);
+						border-radius: 2px;
+						position: absolute;
+						top: 40%;
+						transform: translateY(-50%) translateX(40%) rotate(-45deg);
+					}
+					.show-img-line2 {
+						width: 40%;
+						height: 1px;
+						background-color: var(---edit-fill-color);
+						border-radius: 2px;
+						position: absolute;
+						top: 50%;
+						transform: translateY(-50%) translateX(20%) rotate(45deg);
+						transition: 0.3s ease-in;
+						&.active {
+							top: 70%;
+							transform: translateY(-50%) translateX(32%) rotate(-45deg);
+						}
+					}
+				}
+			}
+			.task-directory-delete {
+				background-color: var(---edit-background-color);
+				border-radius: 7px;
+				&:hover {
+					background-color: var(---taskList-header-options-hover);
+				}
+			}
+		}
+		.tasks-title {
+			font-size: 30px;
+			font-weight: bold;
+		}
+	}
+	.task-list {
+		.task {
+			width: 100%;
+			margin-top: 20px;
+			font-size: 17px;
+			display: flex;
+			flex-direction: row;
+			justify-content: space-between;
+			align-items: center;
+			border-bottom: 0.5px solid #000;
+
+			.task-container {
+				width: 100%;
+			}
+			.task-main {
+				width: 100%;
+				height: 30px;
+				display: flex;
+				justify-content: space-between;
+			}
+
+			.task-wrapper {
+				width: 100%;
+				.task-name {
+					margin-left: 5px;
+				}
+			}
+			.task-options {
+				display: none;
+				gap: 5px;
+				.task-edit {
+					width: 30px;
+					height: 27px;
+					background: none;
+					border-radius: 5px;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					.editImg {
+						fill: var(---edit-fill-color);
+					}
+					&:hover {
+						background-color: var(---edit-background-color);
+					}
+				}
+				.task-delete {
+					width: 30px;
+					height: 27px;
+					background: none;
+					border-radius: 5px;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					&:hover {
+						background-color: var(---edit-background-color);
+					}
+				}
+			}
+			&:hover {
+				.task-options {
+					display: flex;
+				}
+			}
+			.task-description {
+				display: block;
+				width: 95%;
+				min-height: 20px;
+				overflow: hidden;
+				margin: 5px 20px;
+				color: #8b8b8b;
+				font-size: 14px;
+			}
+		}
+	}
+	.add-new-task {
+		width: 130px;
+		height: 30px;
+		margin-top: 10px;
+		background: none;
+		border-radius: 10px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 5px;
+		color: var(---text-color);
+		&:hover {
+			background-color: var(---navBar-directory-background);
+		}
+	}
+}
+#cls-1 {
+	fill: none;
+	stroke: var(---edit-fill-color);
+	stroke-linecap: round;
+	stroke-miterlimit: 10;
+	stroke-width: 22px;
+}
