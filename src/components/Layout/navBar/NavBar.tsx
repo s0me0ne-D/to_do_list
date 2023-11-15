@@ -1,28 +1,25 @@
 import "./navBar.scss";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { NewdirectoryForm } from "./NewDirectoryForm";
 import { NavLink, useParams } from "react-router-dom";
 import { PlusImg } from "../../../icons/PlusImg";
 import { useSelector } from "react-redux";
 import { RootStore } from "../../../redux/store";
-import { setListToLocalStorage } from "../../../hooks/setListToLocalStorage";
+import { setListToLocalStorage } from "../../../utils/setListToLocalStorage";
+import { useOutsideClick } from "../../../hooks/useOutsideClick";
 
 export const NavBar = ({ changeClassName }: { changeClassName: any }) => {
 	const directories = useSelector((state: RootStore) => state.toDoList);
 	const params = useParams();
-	const newDirectoryRef = useRef(null);
-	const addNewDirectoryRef = useRef(null);
-	const body = document.querySelector("body");
 	const [stateNewdirectory, setStateNewdirectory] = useState(false);
 
+	const newDirectoryRef = useOutsideClick(() => {
+		setStateNewdirectory(false);
+	});
 	const createNewdirectory = () => {
 		setStateNewdirectory(!stateNewdirectory);
 	};
-	useEffect(() => {
-		body?.addEventListener("click", () => {
-			setStateNewdirectory(false);
-		});
-	}, [body]);
+
 	useEffect(() => {
 		setListToLocalStorage("ToDoList", directories);
 	}, [directories]);
@@ -49,7 +46,6 @@ export const NavBar = ({ changeClassName }: { changeClassName: any }) => {
 				) : null}
 			</ul>
 			<button
-				ref={addNewDirectoryRef}
 				type="button"
 				className="add-new-list-button"
 				onClick={(event) => {

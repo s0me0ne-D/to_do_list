@@ -3,6 +3,7 @@ import "./newTaskForm.scss";
 import { IDirectory, ITask } from "../../interfaces/todolist.interface";
 import { useDispatch } from "react-redux";
 import { addNewTask, editTask } from "../../redux/toDoSlice";
+import { useOutsideClick } from "../../hooks/useOutsideClick";
 
 export const TaskForm = ({
 	setShowNewTaskForm,
@@ -18,6 +19,13 @@ export const TaskForm = ({
 	setShowNewTaskForm: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
 	const dispatch = useDispatch();
+	const formRef = useOutsideClick(() => {
+		if (setEditTaskIndex) {
+			setEditTaskIndex(undefined);
+		} else {
+			setShowNewTaskForm(false);
+		}
+	});
 	const [taskId, setTaskId] = useState(task ? task.taskId : "");
 
 	const [taskName, setTaskName] = useState(task ? task.taskName : "");
@@ -25,7 +33,7 @@ export const TaskForm = ({
 	const [priority, setPriority] = useState(task ? task.priority : "priority 3");
 	const [errorValueClassName, setErrorValueClassName] = useState("");
 
-	const cancelBtn = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+	const cancelClickHandler = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
 		if (setEditTaskIndex) {
 			setEditTaskIndex(undefined);
 		} else {
@@ -36,7 +44,33 @@ export const TaskForm = ({
 		event.stopPropagation();
 	};
 
-	const addOrEditTask = (
+	const addTask = (
+		event:
+			| React.FormEvent<HTMLFormElement>
+			| React.KeyboardEvent<HTMLInputElement | HTMLSelectElement>
+			| React.MouseEvent<HTMLButtonElement, MouseEvent>
+	) => {
+		event.stopPropagation();
+		event.preventDefault();
+		if (taskName === "") {
+			setErrorValueClassName("error-value");
+			return;
+		}
+		dispatch(
+			addNewTask({
+				index: currentDirectory.id,
+				task: {
+					completed: false,
+					priority: priority,
+					taskId: taskId,
+					taskName: taskName,
+					description: description,
+				},
+			})
+		);
+		setShowNewTaskForm(false);
+	};
+	const editCurrentTask = (
 		event:
 			| React.FormEvent<HTMLFormElement>
 			| React.KeyboardEvent<HTMLInputElement | HTMLSelectElement>
@@ -49,46 +83,51 @@ export const TaskForm = ({
 			setErrorValueClassName("error-value");
 			return;
 		}
-		if (setEditTaskIndex) {
-			dispatch(
-				editTask({
-					taskIndex: editTaskIndex,
-					directorieId: currentDirectory.id,
-					task: {
-						completed: false,
-						priority: priority,
-						taskId: taskId,
-						taskName: taskName,
-						description: description,
-					},
-				})
-			);
-			setEditTaskIndex(undefined);
-		} else {
-			dispatch(
-				addNewTask({
-					index: currentDirectory.id,
-					task: {
-						completed: false,
-						priority: priority,
-						taskId: taskId,
-						taskName: taskName,
-						description: description,
-					},
-				})
-			);
-		}
+		dispatch(
+			editTask({
+				taskIndex: editTaskIndex,
+				directorieId: currentDirectory.id,
+				task: {
+					completed: false,
+					priority: priority,
+					taskId: taskId,
+					taskName: taskName,
+					description: description,
+				},
+			})
+		);
+		setEditTaskIndex(undefined);
 		setShowNewTaskForm(false);
 	};
-	useEffect(() => setTaskId(Math.floor(Math.random() * 100000).toString()), []);
+
+	const keyDownHandler = (
+		event: React.KeyboardEvent<HTMLInputElement> | React.KeyboardEvent<HTMLSelectElement>
+	) => {
+		if (event.key === "Enter") {
+			setEditTaskIndex ? editCurrentTask(event) : addTask(event);
+		}
+	};
+
+	useEffect(() => {
+		if (!task) {
+			setTaskId(Math.floor(Math.random() * 100000).toString());
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 	useEffect(() => {
 		if (taskName.length > 0 && errorValueClassName !== "") setErrorValueClassName("");
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [taskName]);
 
 	return (
-		<div className="new-task">
-			<form action="submit" onSubmit={(event) => addOrEditTask(event)} name="form">
+		<div className="new-task" ref={formRef as any}>
+			<form
+				action="submit"
+				onSubmit={(event) => {
+					setEditTaskIndex ? editCurrentTask(event) : addTask(event);
+				}}
+				name="form"
+			>
 				<input
 					type="text"
 					placeholder="Task name"
@@ -96,11 +135,7 @@ export const TaskForm = ({
 					className={`new-task-name ${errorValueClassName}`}
 					value={taskName}
 					onChange={(event) => setTaskName(event.target.value)}
-					onKeyDown={(event) => {
-						if (event.key === "Enter") {
-							addOrEditTask(event);
-						}
-					}}
+					onKeyDown={keyDownHandler}
 					required={true}
 				/>
 				<textarea
@@ -116,18 +151,14 @@ export const TaskForm = ({
 						name="priority"
 						id="new-task-priority"
 						onChange={(event) => setPriority(event.target.value)}
-						onKeyDown={(event) => {
-							if (event.key === "Enter") {
-								addOrEditTask(event);
-							}
-						}}
+						onKeyDown={keyDownHandler}
 					>
 						<option value="priority 1">Priority 1</option>
 						<option value="priority 2">Priority 2</option>
 						<option value="priority 3">Priority 3</option>
 					</select>
 					<div className="new-task-buttons">
-						<button className="new-task-cancel" onClick={cancelBtn}>
+						<button className="new-task-cancel" onClick={cancelClickHandler}>
 							Cancel
 						</button>
 						<button
@@ -136,7 +167,7 @@ export const TaskForm = ({
 							onClick={(event) => {
 								event.preventDefault();
 								event.stopPropagation();
-								addOrEditTask(event);
+								setEditTaskIndex ? editCurrentTask(event) : addTask(event);
 							}}
 						>
 							{editTaskIndex !== undefined ? "Edit" : "Add"}

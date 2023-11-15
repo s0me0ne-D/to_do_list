@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { getList } from "../hooks/getList";
+import { getList } from "../utils/getList";
 import { IDirectory, ITask } from "../interfaces/todolist.interface";
 
 const initialState: IDirectory[] = getList("ToDoList");
@@ -36,10 +36,10 @@ export const toDoSlice = createSlice({
 			state,
 			action: PayloadAction<{ index: number; taskId: string; currentDirectoryId: string }>
 		) => {
-			const currentDirectoryIndex = state.findIndex(
+			const currentDirectory = state.find(
 				(directory) => directory.id === action.payload.currentDirectoryId
 			);
-			state[currentDirectoryIndex].thisDirectoryTasks.splice(action.payload.index, 1);
+			currentDirectory?.thisDirectoryTasks.splice(action.payload.index, 1);
 		},
 		deleteDirectory: (state, action: PayloadAction<{ directorieId: string }>) => {
 			state.forEach((directorie) => {
@@ -55,11 +55,10 @@ export const toDoSlice = createSlice({
 			state,
 			action: PayloadAction<{ taskIndex: number | undefined; directorieId: string; task: ITask }>
 		) => {
-			const currentDirectoryIndex = state.findIndex(
+			const currentDirectory = state.find(
 				(directorie) => directorie.id === action.payload.directorieId
 			);
-			const currentDirectory = state[currentDirectoryIndex];
-			if (action.payload.taskIndex !== undefined)
+			if (currentDirectory && action.payload.taskIndex !== undefined)
 				currentDirectory.thisDirectoryTasks[action.payload.taskIndex] = action.payload.task;
 		},
 	},

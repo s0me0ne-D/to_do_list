@@ -6,11 +6,10 @@ export const NewdirectoryForm = ({
 	newDirectoryRef,
 	showDirectorie,
 }: {
-	newDirectoryRef: React.MutableRefObject<null>;
+	newDirectoryRef: React.RefObject<HTMLLIElement>;
 	showDirectorie: any;
 }) => {
 	const [value, setValue] = useState("");
-	const [newDirectoryId, setNewDirectoryId] = useState("");
 	const inputRef = useRef<HTMLInputElement>(null);
 	const dispatch = useDispatch();
 
@@ -18,7 +17,6 @@ export const NewdirectoryForm = ({
 		if (inputRef.current !== null) {
 			inputRef.current.focus();
 		}
-		setNewDirectoryId(Math.floor(Math.random() * 100000).toString());
 	}, [inputRef]);
 
 	return (
@@ -30,7 +28,13 @@ export const NewdirectoryForm = ({
 			<form
 				action="submit"
 				onSubmit={(event) => {
-					dispatch(addNewdirectory({ id: newDirectoryId, thisDirectoryTasks: [], title: value }));
+					dispatch(
+						addNewdirectory({
+							id: Math.floor(Math.random() * 100000).toString(),
+							thisDirectoryTasks: [],
+							title: value,
+						})
+					);
 					setValue("");
 					showDirectorie(false);
 					event.preventDefault();
