@@ -2,6 +2,7 @@
 	"name": "todolist-redux-toolkit",
 	"version": "0.1.0",
 	"private": true,
+	"homepage": "https://s0me0ne-d.github.io/to_do_list_redux-toolkit/",
 	"dependencies": {
 		"@reduxjs/toolkit": "^1.9.7",
 		"@testing-library/jest-dom": "^5.17.0",
