@@ -1,6 +1,6 @@
 .navBar {
 	min-width: 300px;
-	height: 100%;
+	min-height: 100%;
 	background-color: var(---navBar-background);
 	transition: 0.4s ease-in;
 
@@ -31,6 +31,8 @@
 				display: flex;
 				align-items: center;
 				text-decoration: none;
+				word-wrap: break-word;
+				word-break: break-all;
 				color: var(---text-color);
 			}
 
@@ -58,4 +60,13 @@
 }
 .activeNavBar {
 	margin-left: -300px;
+}
+
+@media (max-width: 1050px) {
+	.navBar {
+		position: absolute;
+		top: 0;
+		left: 0;
+		z-index: 999;
+	}
 }

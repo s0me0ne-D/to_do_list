@@ -14,31 +14,46 @@
 	position: relative;
 	.priority-1 {
 		&::after {
-			content: "";
+			content: "P1";
 			position: absolute;
+			display: flex;
+			align-items: center;
+			justify-content: center;
 			right: -15px;
-			width: 10px;
-			height: 10px;
+			width: 20px;
+			height: 20px;
+			font-size: 13px;
+			border-radius: 3px;
 			background-color: red;
 		}
 	}
 	.priority-2 {
 		&::after {
-			content: "";
+			content: "P2";
 			position: absolute;
+			display: flex;
+			align-items: center;
+			justify-content: center;
 			right: -15px;
-			width: 10px;
-			height: 10px;
+			width: 20px;
+			height: 20px;
+			font-size: 13px;
+			border-radius: 3px;
 			background-color: blue;
 		}
 	}
 	.priority-3 {
 		&::after {
-			content: "";
+			content: "P3";
 			position: absolute;
+			display: flex;
+			align-items: center;
+			justify-content: center;
 			right: -15px;
-			width: 10px;
-			height: 10px;
+			width: 20px;
+			height: 20px;
+			font-size: 13px;
+			border-radius: 3px;
 			background-color: green;
 		}
 	}
@@ -54,13 +69,15 @@
 			display: flex;
 			gap: 5px;
 			.task-completed-button {
+				max-height: 30px;
 				background-color: var(---edit-background-color);
 				border-radius: 7px;
-				padding: 3px;
+				padding: 3px 7px;
 				display: flex;
 				align-items: center;
 				gap: 5px;
 				color: var(---edit-fill-color);
+
 				&:hover {
 					background-color: var(---taskList-header-options-hover);
 				}
@@ -96,6 +113,7 @@
 				}
 			}
 			.task-directory-delete {
+				max-height: 30px;
 				background-color: var(---edit-background-color);
 				border-radius: 7px;
 				&:hover {
@@ -104,6 +122,8 @@
 			}
 		}
 		.tasks-title {
+			max-width: 500px;
+			word-wrap: break-word;
 			font-size: 30px;
 			font-weight: bold;
 		}
@@ -204,4 +224,14 @@
 	stroke-linecap: round;
 	stroke-miterlimit: 10;
 	stroke-width: 22px;
+}
+
+@media (max-width: 750px) {
+	.tasks-page {
+		padding: 0 30px;
+	}
+	.task-header {
+		flex-direction: column;
+		gap: 10px;
+	}
 }
