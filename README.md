@@ -14,4 +14,4 @@
 
 ## Demo:
 
-[Demo link](https://s0me0ne-d.github.io/to_do_list_redux-toolkit/)
+[Demo link](https://s0me0ne-d.github.io/to_do_list/)
